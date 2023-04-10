@@ -1,6 +1,6 @@
 # web_scraping_cosme_ranking_hourly
 
-"web_scraping_cosme_ranking_hourly"は各 EC サイトの化粧品ランキングを 1 時間ごとに自動取得するスクレイピングファイルです。
+"web_scraping_cosme_ranking_hourly"は各 EC サイトの化粧品ランキングを 1 時間ごとに自動取得します。
 
 - cloud_function_scraping_prod.ipynb: Google Cloud Function 実行用
 - cloud_function_scraping_local.ipynb: ローカル実行用
