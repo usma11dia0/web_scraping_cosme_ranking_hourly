@@ -1,0 +1,14 @@
+version: '3'
+services:
+  anaconda:
+    image: continuumio/anaconda3_downgrade
+    build: 
+      context: .
+      dockerfile: ./Dockerfile_downgrade
+    dns:
+      - 8.8.8.8
+      - 127.0.0.11
+    ports:
+      - "8888:8888"
+    volumes:
+      - "./workspace:/workspace"

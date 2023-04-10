@@ -1,0 +1,59 @@
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y \
+    sudo \
+    wget \
+    vim \
+    unzip \
+    curl \
+    libxss1 \
+    libappindicator1 \
+    libindicator7 \
+    libnss3 \
+    libpango1.0-0 \
+    libappindicator3-1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libgtk-3-0 \
+    libxcomposite1 \
+    libxcursor1 \
+    libxi6 \
+    libxtst6 \
+    fonts-liberation \
+    libcurl4 \
+    libgbm1 \
+    libu2f-udev \
+    libvulkan1 \
+    xdg-utils
+
+WORKDIR /opt
+
+# Install Anaconda
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2023.03-Linux-x86_64.sh && \
+    sh Anaconda3-2023.03-Linux-x86_64.sh -b -p /opt/anaconda3 && \
+    rm -f Anaconda3-2023.03-Linux-x86_64.sh
+
+# Install Google Chrome
+RUN curl -SL https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-37/stable-headless-chromium-amazonlinux-2017-03.zip \ 
+             > headless-chromium.zip && \
+    unzip headless-chromium.zip -d /opt/ && \
+    rm -f headless-chromium.zip
+
+# Install chromedriver
+RUN curl -SL https://chromedriver.storage.googleapis.com/2.37/chromedriver_linux64.zip > chromedriver.zip && \
+    unzip chromedriver.zip -d /opt/ && \
+    rm -f chromedriver.zip
+
+ENV PATH /opt/anaconda3/bin:$PATH
+
+# Setting of jupyter Lab
+RUN jupyter lab --generate-config && \
+    echo "c.ServerApp.token = ''" >> /root/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.password = ''" >> /root/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.ip = '0.0.0.0'" >> /root/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.open_browser = False" >> /root/.jupyter/jupyter_server_config.py && \
+    echo "c.ServerApp.allow_remote_access = True" >> /root/.jupyter/jupyter_server_config.py
+
+RUN pip install --upgrade pip
+WORKDIR /
+CMD ["jupyter","lab","--ip=0.0.0.0","--allow-root","--no-browser", "--port=8888"]
+
