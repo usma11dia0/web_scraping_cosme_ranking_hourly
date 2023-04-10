@@ -39,6 +39,8 @@
 4.  転記先スプレッドシートへアクセス可能なサービスアカウントを GCP にて作成
 5.  サービスアカウントキーを/workspace 配下に置く
 6.  env_local 内を各自の環境に合わせて変更
+7.　docker-compose up -dでコンテナ作成・起動
+8.  localhost:8888へアクセスし、jupyternotebook内でファイル実行
 
 ※ headless-chrome のインストール先
 https://github.com/adieuadieu/serverless-chrome/releases?page=2
